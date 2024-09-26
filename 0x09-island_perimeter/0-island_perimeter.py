@@ -4,20 +4,13 @@
 
 def island_perimeter(grid):
     """Computes the perimeter"""
-    perimeter = 0
-    if type(grid) != list:
-        return 0
-    n = len(grid)
-    for i, row in enumerate(grid):
-        m = len(row)
-        for j, cell in enumerate(row):
-            if cell == 0:
-                continue
-            edges = (
-                i == 0 or (len(grid[i - 1]) > j and grid[i - 1][j] == 0),
-                j == m - 1 or (m > j + 1 and row[j + 1] == 0),
-                i == n - 1 or (len(grid[i + 1]) > j and grid[i + 1][j] == 0),
-                j == 0 or row[j - 1] == 0,
-            )
-            perimeter += sum(edges)
-    return perimeter
+    count = 0
+    for row in range(len(grid)):
+        for col in range(len(grid[row])):
+            if grid[row][col] == 1:
+                count += 4
+                if row > 0 and grid[row - 1][col] == 1:
+                    count -= 2
+                if col > 0 and grid[row][col - 1] == 1:
+                    count -= 2
+    return count
