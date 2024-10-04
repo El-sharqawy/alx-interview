@@ -1,43 +1,26 @@
 #!/usr/bin/python3
-"""
-prime time task
-"""
+"""Prime game module Task ALX"""
 
 
 def isWinner(x, nums):
-    """
-    main function for prime game module
-    """
-    maria = 0
-    ben = 0
-
-    def SieveOfEratosthenes(n):
-        """Sieve of Eratosthenes Function"""
-
-        prime = [True for i in range(n + 1)]
-        pointer = 2
-        while pointer * pointer <= n:
-            if prime[pointer] is True:
-                for i in range(pointer * pointer, n + 1, pointer):
-                    prime[i] = False
-            pointer += 1
-        prime[0] = False
-        prime[1] = False
-        return prime
-
-    max_n = max(nums)
-    primes = SieveOfEratosthenes(max_n)
-
-    for round in nums:
-        round_primes = [i for i in range(round + 1) if primes[i]]
-        if len(round_primes) % 2 == 0:
-            ben += 1
-        else:
-            maria += 1
-
-    if maria > ben:
-        return "Maria"
-    elif ben > maria:
-        return "Ben"
-
-    return None
+    """Determines the winner of a prime game session"""
+    if x < 1 or not nums:
+        return None
+    marias_wins, bens_wins = 0, 0
+    # generate primes with a limit of the maximum number in nums
+    n = max(nums)
+    primes = [True for _ in range(1, n + 1, 1)]
+    primes[0] = False
+    for i, is_prime in enumerate(primes, 1):
+        if i == 1 or not is_prime:
+            continue
+        for j in range(i + i, n + 1, i):
+            primes[j - 1] = False
+    # filter the number of primes less than n in nums for each round
+    for _, n in zip(range(x), nums):
+        primes_count = len(list(filter(lambda x: x, primes[0: n])))
+        bens_wins += primes_count % 2 == 0
+        marias_wins += primes_count % 2 == 1
+    if marias_wins == bens_wins:
+        return None
+    return 'Maria' if marias_wins > bens_wins else 'Ben'
