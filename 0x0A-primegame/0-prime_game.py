@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """
-ALX prime time task
+prime time task
 """
 
 
 def isWinner(x, nums):
     """
-    The main Function for prime game module
+    main function for prime game module
     """
     maria = 0
     ben = 0
